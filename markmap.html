@@ -47,8 +47,11 @@
             } else {
                 const md = url.searchParams.get("md");
                 const reqUrl = md
-                    ? new URL(md)
+                    ? new URL(md, document.location)
                     : new URL("README.md", document.location);
+                const title=document.createElement("h")
+                title.innerText=decodeURIComponent(reqUrl)
+                document.body.prepend(title)
                 const req = new Request(reqUrl);
                 //need Help: support fetch resources from different site
                 const res = await fetch(req);

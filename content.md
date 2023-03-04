@@ -1,4 +1,8 @@
-# 笔记目录[![all files](https://img.shields.io/badge/MD-list-purple.svg?logo=book&labelColor=abcdef)](all.md)
+# 笔记目录
+
+## 攻硕
+
+- [最优化理论](硕士/最优化理论.md)
 
 ## 大四上
 
@@ -46,3 +50,9 @@
 ## 疫情前
 
 [疫情前](疫情前/README.md)
+
+## All Files Form VCS
+
+通过 gitee API 生成的目前的所有文件列表
+
+<!-- generate File list here -->

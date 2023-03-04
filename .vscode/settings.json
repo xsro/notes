@@ -5,6 +5,10 @@
         "editor.defaultFormatter": "esbenp.prettier-vscode",
         "editor.unicodeHighlight.ambiguousCharacters": false,
         "editor.wordWrap": "on",
-        "editor.quickSuggestions":true
+        "editor.quickSuggestions":{
+            "comments": "on",
+            "strings": "on",
+            "other": "on"
+        }
     }
 }
