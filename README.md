@@ -19,7 +19,9 @@
   - 工程与社会
   - 毛概
 - 大二下 at [dbd559](https://gitee.com/xsro/college-notes/tree/cac46353b8342b3b01a7671040cdd891bb349aeb/大二下)
-  - 马克思主义基本原理
+  - 马原
+- 大三上 职业发展规划 at [528f58f3200](https://gitee.com/xsro/college-notes/tree/528f58f32004e9ca102472d2d390cd9762836a93/大三上/职业发展规划/)
+- 大四上 工程管理与经济决策 at [528f58f3200](https://gitee.com/xsro/college-notes/tree/528f58f32004e9ca102472d2d390cd9762836a93/大四上/工程管理与经济决策/)
 
 ## 好玩的表情（侵删）
 
