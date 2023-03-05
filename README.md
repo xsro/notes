@@ -22,8 +22,10 @@
 
 ## 好玩的表情（侵删）
 
+![haha](./pics/meme/a.gif)
 ![](./pics/meme/pid_zhou.gif)
-![](./pics/meme/a.gif)
+![](./pics/meme/pid.jpg)
+![](./pics/meme/keep_pole_left.jpg)
 
 ## 感谢
 
