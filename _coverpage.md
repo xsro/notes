@@ -4,7 +4,7 @@
 
 # 自动化学习笔记
 
-> NJUPT and more learning NOTEs
+> learning NOTEs at NJUPT and after graduation
 
 - 使用[docsify](https://docsify.js.org)布置在 gitee pages
 - 仅仅是个人笔记，侵删
