@@ -4,7 +4,7 @@
 [![deploy](https://img.shields.io/badge/deploy-docsify-brightgreen.svg?labelColor=abcdef)](https://docsify.js.org)
 [![pages](https://img.shields.io/badge/pages-gitee-critical.svg?logo=Gitee&labelColor=abcdef)](https://xsro.gitee.io/college-notes/)
 
-这是我在 NJUPT 学习的笔记，主要是疫情期间线上学习的笔记。由于时间能力有限，不可避免地出现残缺和烂尾。
+这是我在 NJUPT 即之后 学习的笔记，主要是疫情期间线上学习的笔记。由于时间能力有限，不可避免地出现残缺和烂尾。
 内容仅仅作为学习记录，不能保证正确性，如果有侵权请联系删除修改。
 
 内容通过 docsify 渲染并布置在了 Gitee Pages 中。
@@ -23,6 +23,7 @@
 ## 好玩的表情（侵删）
 
 ![](./pics/meme/pid_zhou.gif)
+![](./pics/meme/a.gif)
 
 ## 感谢
 

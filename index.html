@@ -118,7 +118,7 @@
               + `[📚 VIEW](https://gitee.com/xsro/college-notes/blob/main/${vm.route.file})\t`
               + `[🎇 MARKMAP](${markmapUrl})\n\n` + content;
 
-            //write all files list to all.md, this list is used for search and can be different from the deployed files
+            //write all files list, this list is used for search and can be different from the deployed files
             const _files = localStorage.getItem("docsify.mds.list");
             const _time = localStorage.getItem("docsify.mds.updateTime");
             if (_files && _time && content.includes("<!-- generate File list here -->")) {
