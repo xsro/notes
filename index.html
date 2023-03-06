@@ -242,10 +242,14 @@
             const [full, tex, display] = blocks[index];
             let rendered = ""
             if (typeof katex !== "undefined") {
-              rendered = katex.renderToString(tex, {
-                throwOnError: false,
-                displayMode: display,
-              })
+              try{
+                rendered = katex.renderToString(tex, {
+                  throwOnError: true,
+                  displayMode: display,
+                })
+              }catch(e){
+                rendered = `<span style="color: red;">${e}</span>`
+              }
             } else {
               rendered = `<a title="${full}">[${display ? "block" : "inline"}math[${blocks.length - index}]]</a>`;
             }
