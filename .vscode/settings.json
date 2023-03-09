@@ -1,5 +1,7 @@
 {
     "pasteImage.path": "${projectRoot}/pics",
+    "pasteImage.defaultName": "${currentFileNameWithoutExt}_YMMDD_HHmmss",
+    "pasteImage.forceUnixStyleSeparator": true,
     "[markdown]": {
         "editor.formatOnSave": true,
         "editor.defaultFormatter": "esbenp.prettier-vscode",
