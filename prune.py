@@ -35,4 +35,5 @@ for md in Path.cwd().glob("**/*.md"):
             pics.pop(pics.index(base))
 for pic in pics:
     if pic != "meme":
+        print("remove",pic)
         os.remove("pics/"+pic)
