@@ -11,14 +11,28 @@
 
 - [markdown 笔记目录](content.md)
 
+## cdn links 
+
+全球
+
+- https://www.jsdelivr.com/
+- https://unpkg.com/
+
+国内
+
+- https://staticfile.org
+- https://www.bootcdn.cn/
+- http://lib.sinaapp.com/
+- https://cdn.baomitu.com
+
 ## permalinks
 
 有些内容无法部署，commit 位于：
 
-- 大三下 at [dbd559](https://gitee.com/xsro/college-notes/tree/dbd559cfe4c3eae2355fb4ae40e06fc2c5f8136d/大三下)
-- 大二下 at [dbd559](https://gitee.com/xsro/college-notes/tree/cac46353b8342b3b01a7671040cdd891bb349aeb/大二下)
-- 大三上 at [528f58f3200](https://gitee.com/xsro/college-notes/tree/528f58f32004e9ca102472d2d390cd9762836a93/大三上/)
-- 大四上 at [528f58f3200](https://gitee.com/xsro/college-notes/tree/528f58f32004e9ca102472d2d390cd9762836a93/大四上/)
+- 大三下 at [dbd559](https://github.com/xsro/notes/tree/dbd559cfe4c3eae2355fb4ae40e06fc2c5f8136d/大三下)
+- 大二下 at [dbd559](https://github.com/xsro/notes/tree/cac46353b8342b3b01a7671040cdd891bb349aeb/大二下)
+- 大三上 at [528f58f3200](https://github.com/xsro/notes/tree/528f58f32004e9ca102472d2d390cd9762836a93/大三上/)
+- 大四上 at [528f58f3200](https://github.com/xsro/notes/tree/528f58f32004e9ca102472d2d390cd9762836a93/大四上/)
 
 ## 好玩的表情（侵删）
 
@@ -33,6 +47,6 @@
 
 <p align="center">
   <a href="https://docsify.js.org">
-    <a href='https://gitee.com/xsro/college-notes'><img src='https://gitee.com/xsro/college-notes/widgets/widget_6.svg?color=c71d23' alt='Fork me on Gitee'></img></a>
+    <a href='https://github.com/xsro/notes'><img src='https://github.com/xsro/notes/widgets/widget_6.svg?color=c71d23' alt='Fork me on Gitee'></img></a>
   </a>
 </p>

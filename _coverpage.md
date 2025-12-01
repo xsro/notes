@@ -6,9 +6,9 @@
 
 > learning NOTEs at NJUPT and after graduation
 
-- 使用[docsify](https://docsify.js.org)布置在 gitee pages
+- 使用[docsify](https://docsify.js.org)布置在 github pages
 - 仅仅是个人笔记，侵删
 - 无法保证正确性和必要性
 
-[仓库](https://gitee.com/xsro/college-notes)
+[仓库](https://github.com/xsro/notes)
 [目录](content.md)

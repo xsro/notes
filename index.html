@@ -102,7 +102,7 @@
   <script>
     window.$docsify = {
       name: '<span>大学笔记</span>',
-      repo: 'https://gitee.com/xsro/college-notes',
+      repo: 'https://github.com/xsro/notes',
       coverpage: true,
       onlyCover: false,
       plugins: [
@@ -120,8 +120,8 @@
             const markmapUrl = new URL(prefix + 'markmap.html', document.location);
             const markdownUrl = new URL(prefix + vm.route.file, document.location);
             markmapUrl.searchParams.set("md", markdownUrl.pathname)
-            content = `[📝 EDIT](https://gitee.com/xsro/college-notes/edit/main/${vm.route.file})\t`
-              + `[📚 VIEW](https://gitee.com/xsro/college-notes/blob/main/${vm.route.file})\t`
+            content = `[📝 EDIT](https://github.com/xsro/notes/edit/main/${vm.route.file})\t`
+              + `[📚 VIEW](https://github.com/xsro/notes/blob/main/${vm.route.file})\t`
               + `[🎇 MARKMAP](${markmapUrl})\n\n` + content;
 
             //write all files list, this list is used for search and can be different from the deployed files
@@ -170,9 +170,9 @@
           hook.mounted(function () {
             // Called after initial completion. Only trigger once, no arguments.
             // use gitee corner following https://github.com/Koooooo-7/docsify-corner 
-            const icon = "https://gitee.com/xsro/college-notes/widgets/widget_1.svg"
+            const icon = "https://github.com/xsro/notes/widgets/widget_1.svg"
             const a = document.querySelector('a.github-corner')
-            a.href = 'https://gitee.com/xsro/college-notes'
+            a.href = 'https://github.com/xsro/notes'
             a.innerHTML = `<img docsify-corner src=${icon} width= 80 height = 80>`
           });
 
