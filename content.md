@@ -53,6 +53,4 @@
 
 ## All Files Form VCS
 
-通过 gitee API 生成的目前的所有文件列表
-
-<!-- generate File list here -->
+[auto-generated list of all markdown files](all-markdown.md)

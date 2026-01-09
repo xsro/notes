@@ -8,7 +8,7 @@
   <meta name="description" content="Description">
   <meta name="viewport"
     content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-  <link rel="icon" href="https://portrait.gitee.com/uploads/avatars/user/2532/7597569_chenliucx_1599386104.png"
+  <link rel="icon" href="https://avatars.githubusercontent.com/u/64292434?s=400&u=1dae24f4bdc8f8d1e5736cf04147480ca7b1b1a1&v=4"
     type="image/x-icon" />
   <link rel="stylesheet" href="https://cdn.staticfile.org/docsify/4.13.0/themes/vue.css" />
   <link rel="stylesheet" href="https://cdn.staticfile.org/docsify/4.13.0/themes/buble.css" disabled />
@@ -32,8 +32,8 @@
         <option value="dark">暗色</option>
         <option value="pure">纯净</option>
       </optgroup>
-      <optgroup label="刷新">
-        <option value="filelist">从gitee获取文件列表</option>
+      <optgroup label="调试">
+        <option value="clear-cache">清空缓存</option>
       </optgroup>
     </select>
     <a href="#/content.md">目录</a>
@@ -54,25 +54,6 @@
         themes[0].disabled = false;
       }
     }
-    //函数：从gitee API获取当前仓库的文件树，需要仓库开源，主要用于支持搜索功能
-    function updateFiles() {
-      return fetch("https://gitee.com/api/v5/repos/xsro/college-notes/git/trees/main?recursive=1")
-        .then(val => val.text())
-        .then(val => {
-          const files = JSON.parse(val);
-          const markdownFiles = files.tree.map(val => val.path).filter(val => val.endsWith(".md"))
-          localStorage.setItem("docsify.mds.list", markdownFiles.join(','));
-          localStorage.setItem("docsify.mds.updateTime", Date.now());
-          console.log("updated")
-          return markdownFiles;
-        })
-    }
-
-    //超时自动更新文件树
-    const lastUpdateListTime = localStorage.getItem("docsify.mds.updateTime");
-    if (!lastUpdateListTime || Date.now() - lastUpdateListTime > 1000 * 60 * 24) {
-      updateFiles();
-    }
 
     //手动更换主题或刷新文件树
     const control = document.getElementById("control")
@@ -80,16 +61,8 @@
     changeTheme(control.value);
     control.addEventListener(
       "input", e => {
-        if (e.target.value === "filelist") {
+        if (e.target.value === "clear-cache") {
           localStorage.clear()
-          updateFiles().then(
-            files => {
-              alert("reload " + files.length + " files");
-              location.reload()
-            }
-          ).catch(e => {
-            alert("fetch failed" + e)
-          })
         } else {
           changeTheme(e.target.value);
         }
@@ -102,7 +75,7 @@
   <script>
     window.$docsify = {
       name: '<span>大学笔记</span>',
-      repo: 'https://gitee.com/xsro/college-notes',
+      repo: 'https://github.com/xsro/notes',
       coverpage: true,
       onlyCover: false,
       plugins: [
@@ -120,36 +93,9 @@
             const markmapUrl = new URL(prefix + 'markmap.html', document.location);
             const markdownUrl = new URL(prefix + vm.route.file, document.location);
             markmapUrl.searchParams.set("md", markdownUrl.pathname)
-            content = `[📝 EDIT](https://gitee.com/xsro/college-notes/edit/main/${vm.route.file})\t`
-              + `[📚 VIEW](https://gitee.com/xsro/college-notes/blob/main/${vm.route.file})\t`
+            content = `[📝 EDIT](https://github.com/xsro/notes/edit/main/${vm.route.file})\t`
+              + `[📚 VIEW](https://github.com/xsro/notes/blob/main/${vm.route.file})\t`
               + `[🎇 MARKMAP](${markmapUrl})\n\n` + content;
-
-            //write all files list, this list is used for search and can be different from the deployed files
-            const _files = localStorage.getItem("docsify.mds.list");
-            const _time = localStorage.getItem("docsify.mds.updateTime");
-            if (_files && _time && content.includes("<!-- generate File list here -->")) {
-              const files = _files.split(",");
-              const dup = (val, times) => new Array(times).fill(val).join("")
-              let str = "";
-              let lastSegs = [];
-              for (const file of files) {
-                segs = file.split("/").filter(val => val.length > 0);
-                for (let i = 0; i < segs.length; i++) {
-                  if (i < lastSegs.length && segs[i] === lastSegs[i]) {
-                  }
-                  else if (i === segs.length - 1) {
-                    str += `${dup("\t", i)}- [${segs[i]}](${file})\n`;
-                  }
-                  else {
-                    str += `${dup("\t", i)}- ${segs[i]}\n`;
-                  }
-                }
-                lastSegs = segs
-              }
-              const filesList = files.map(val => `- [${val}](${val})`).join("\n");
-              const header = `\nupdate at \`${new Date(parseInt(_time)).toLocaleString()}\`\n\n`;
-              content = content.replace("<!-- generate File list here -->", header + str)
-            }
 
             return content;
           });
@@ -170,10 +116,10 @@
           hook.mounted(function () {
             // Called after initial completion. Only trigger once, no arguments.
             // use gitee corner following https://github.com/Koooooo-7/docsify-corner 
-            const icon = "https://gitee.com/xsro/college-notes/widgets/widget_1.svg"
+            // const icon = "https://github.com/xsro/notes/widgets/widget_1.svg"
             const a = document.querySelector('a.github-corner')
-            a.href = 'https://gitee.com/xsro/college-notes'
-            a.innerHTML = `<img docsify-corner alt="corner" src=${icon} width= 80 height = 80>`
+            a.href = 'https://github.com/xsro/notes'
+            // a.innerHTML = `<img docsify-corner src=${icon} width= 80 height = 80>`
           });
 
           hook.ready(function () {
@@ -191,16 +137,27 @@
 
   <!-- full text search https://docsify.js.org/#/plugins?id=full-text-search -->
   <script>
-    const files = localStorage.getItem("docsify.mds.list");
-    if (files) {
-      const _files = files.split(",");
+    async function getFileList() {
+      const url=new URL(document.location.href);
+      const res=await fetch(url.pathname+"all-markdown.md")
+      const text=await res.text();
+      const files=[]
+      const regex = /\[([^[\]]*)\]/; // 无 g 标志，仅匹配第一次
+      for (const line of text.split("\n")){
+        const match = line.match(regex);
+        if(match){
+          files.push(match[1]);
+        }
+      }
+
       window.$docsify.search = {
         placeholder: {
           '/': '搜索'
         },
-        paths: _files
+        paths: files
       };
     }
+    getFileList();
   </script>
   <script src="https://cdn.staticfile.org/docsify/4.13.0/plugins/search.min.js"></script>
 
