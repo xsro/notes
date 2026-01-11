@@ -94,8 +94,10 @@
             if (!prefix.endsWith("/")) {
               prefix = prefix.substring(0, prefix.lastIndexOf("/") + 1);
             }
-            const markmapUrl = new URL(prefix + 'markmap.html', document.location);
-            const markdownUrl = new URL(prefix + vm.route.file, document.location);
+            const markmapUrl = new URL(document.location);
+            markmapUrl.pathname = prefix + 'markmap.html';
+            const markdownUrl = new URL(document.location);
+            markdownUrl.pathname = prefix + vm.route.file,
             markmapUrl.searchParams.set("md", markdownUrl.pathname)
             content = `[📝 EDIT](https://github.com/xsro/notes/edit/main/${vm.route.file})\t`
               + `[📚 VIEW](https://github.com/xsro/notes/blob/main/${vm.route.file})\t`
