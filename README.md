@@ -44,9 +44,3 @@
 ## 感谢
 
 :cherry_blossom:非常感谢教授我课程的老师们 :heart::heart::heart:，老师超棒超棒的
-
-<p align="center">
-  <a href="https://docsify.js.org">
-    <a href='https://github.com/xsro/notes'><img src='https://github.com/xsro/notes/widgets/widget_6.svg?color=c71d23' alt='Fork me on Gitee'></img></a>
-  </a>
-</p>
