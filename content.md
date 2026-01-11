@@ -1,8 +1,9 @@
 # 笔记目录
 
-## 攻硕
+## 研究生
 
-- [最优化理论](master/最优化理论.md)
+- [最优化理论](postgraduate/最优化理论.md)
+  - [第六章](postgraduate/最优化题目/6.md)
 
 ## 大四上
 
@@ -51,6 +52,6 @@
 
 [疫情前](疫情前/README.md)
 
-## All Files Form VCS
+## 所有文件列表
 
 [auto-generated list of all markdown files](all-markdown.md)

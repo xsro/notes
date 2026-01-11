@@ -10,10 +10,10 @@
     content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
   <link rel="icon" href="https://avatars.githubusercontent.com/u/64292434?s=400&u=1dae24f4bdc8f8d1e5736cf04147480ca7b1b1a1&v=4"
     type="image/x-icon" />
-  <link rel="stylesheet" href="https://cdn.staticfile.org/docsify/4.13.0/themes/vue.css" />
-  <link rel="stylesheet" href="https://cdn.staticfile.org/docsify/4.13.0/themes/buble.css" disabled />
-  <link rel="stylesheet" href="https://cdn.staticfile.org/docsify/4.13.0/themes/dark.css" disabled />
-  <link rel="stylesheet" href="https://cdn.staticfile.org/docsify/4.13.0/themes/pure.css" disabled />
+  <link rel="stylesheet" href="https://cdn.staticfile.org/docsify/4.13.1/themes/vue.css" />
+  <link rel="stylesheet" href="https://cdn.staticfile.org/docsify/4.13.1/themes/buble.css" disabled />
+  <link rel="stylesheet" href="https://cdn.staticfile.org/docsify/4.13.1/themes/dark.css" disabled />
+  <link rel="stylesheet" href="https://cdn.staticfile.org/docsify/4.13.1/themes/pure.css" disabled />
   <style>
   .katex-display{
     overflow-x: auto;
@@ -131,14 +131,15 @@
       }
     };
   </script>
-  <script src="https://cdn.staticfile.org/docsify/4.13.0/docsify.min.js"></script>
+  <script src="https://cdn.staticfile.org/docsify/4.13.1/docsify.min.js"></script>
 
 
   <!-- full text search https://docsify.js.org/#/plugins?id=full-text-search -->
   <script>
     async function getFileList() {
       const url=new URL(document.location.href);
-      const res=await fetch(url.pathname+"all-markdown.md")
+      const base=url.pathname.endsWith('/')?url.pathname:url.pathname.substring(0,url.pathname.lastIndexOf('/')+1);
+      const res= await fetch(base+"all-markdown.md")
       const text=await res.text();
       const files=[]
       const regex = /\[([^[\]]*)\]/; // 无 g 标志，仅匹配第一次
@@ -158,7 +159,7 @@
     }
     getFileList();
   </script>
-  <script src="https://cdn.staticfile.org/docsify/4.13.0/plugins/search.min.js"></script>
+  <script src="https://cdn.staticfile.org/docsify/4.13.1/plugins/search.min.js"></script>
 
   <!-- support mermaid following https://docsify.js.org/#/markdown?id=supports-mermaid -->
   <script src="https://cdn.staticfile.org/mermaid/8.13.10/mermaid.min.js"></script>
@@ -181,9 +182,37 @@
   </script>
 
 
+  <!-- redirect links prefix with ./ -->
+  <script>
+    function ensureEndsWith(str_, suffix) {
+      const str=str_.replace(/[\\\/]+/g,"/"); //remove trailing slashes
+      if (str.endsWith(suffix)) {
+        return str;
+      } else {
+        return str.substring(0, str.lastIndexOf(suffix) + 1);
+      }
+    }
+
+    window.$docsify.plugins.push(
+      function (hook, vm) {
+        hook.beforeEach(function (content) {
+          const prefix1= ensureEndsWith(document.location.pathname,"/") ;
+          const prefix2= ensureEndsWith(vm.route.path,"/") ;
+          let prefix=prefix1+prefix2;
+          if(prefix2.startsWith("/")){
+            prefix=prefix1.substring(0,prefix1.length-1)+prefix2;
+          }
+          content = content.replace(/\(\.\//g, `(${prefix}`);
+          return content;
+        })
+      }
+    );
+  </script>
+
+
   <!-- support katex following https://github.com/upupming/docsify-katex#usage-->
-  <script defer src="https://cdn.bootcdn.net/ajax/libs/KaTeX/0.15.2/katex.min.js"></script>
-  <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/KaTeX/0.15.2/katex.min.css">
+  <script defer src="https://cdn.bootcdn.net/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+  <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/KaTeX/0.16.9/katex.min.css">
   <script>
     window.$docsify.plugins.push(
       function (hook, vm) {
@@ -193,7 +222,15 @@
             mdstr = mdstr.replace(r[0], `[math[${blocks.length}]]`)
             blocks.push([r[0], r[1], true])
           }
+          for (const r of mdstr.matchAll(/[^\\]\\\[([\s\S]*?[^\\])\\\]/g)) {
+            mdstr = mdstr.replace(r[0], `[math[${blocks.length}]]`)
+            blocks.push([r[0], r[1], true])
+          }
           for (const r of mdstr.matchAll(/\$(.*?[^\\])\$/g)) {
+            mdstr = mdstr.replace(r[0], `[math[${blocks.length}]]`)
+            blocks.push([r[0], r[1], false])
+          }
+          for (const r of mdstr.matchAll(/\\\((.*?[^\\])\\\)/g)) {
             mdstr = mdstr.replace(r[0], `[math[${blocks.length}]]`)
             blocks.push([r[0], r[1], false])
           }
