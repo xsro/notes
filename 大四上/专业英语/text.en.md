@@ -117,7 +117,7 @@ Hajizadeh and Mahootchi (2016) used a radial-basis-function neural network to ap
 
 This section is devoted to formulating the stochastic dynamic VSP.
 We begin with a description of the static VSP, using the connection-based model (e.g., Bunte and Kliewer, 2009).
-We adopt a directed graph $J = ( N , A )$to represent the VSP, as shown in [Fig. 1](pics/Fig1.png), where Zand Udenote the sets of nodes and links, respectively.
+We adopt a directed graph $J = ( N , A )$to represent the VSP, as shown in [Fig. 1](image/Fig1.png), where Zand Udenote the sets of nodes and links, respectively.
 Considering the MDVSP, we denote the set of depots, where vehicles are dispatched, as $K$.
 In the MDVSP, some trips have to be assigned to the vehicles from a certain set of depots (Löbel, 1998).
 Therefore, there is a particular layer $J^k (N^k, A^k)$ of $J = (N,A)$ for each depot $k \in K$.
@@ -131,9 +131,9 @@ In order to always guarantee that the number of buses departing from virtual dep
 In reality, a bus can arrive at a virtual depot at any time, which results in an infinite number of virtual depot nodes in our network.
 To diminish computational efforts, the time is sampled every $\beta$ minutes.
 
-![Fig. 1. Illustrative example of a single-period VSP. ](pics/Fig1.png)
+![Fig. 1. Illustrative example of a single-period VSP. ](image/Fig1.png)
 
-![Fig. 2. Time horizon](pics/Fig2.png)
+![Fig. 2. Time horizon](image/Fig2.png)
 
 The arc set $A^k$ includes the deadhead, pull-in and pull-out arcs.
 Let $e_{ij}, (i,j) \in A^k$ represent the deadhead travel time from the end location of the trip ito the start location of the trip j.
@@ -150,7 +150,7 @@ Note that when calculating the fixed cost, we do not count the vehicles departin
 As previously mentioned, on the days of operations and as time goes by, we observe actual arrival times of trips and can thus reschedule vehicles to fulfill subsequent trips, accordingly.
 In the dynamic scheduling, we base on a finite planning horizon, which is divided into several periods.
 At the beginning of each period, i.e.,$t=0,\dots,T$, we reschedule a bus fleet based on the current traffic condition.
-With a little abuse of notation, we also refer to the period which begins at the time tas the period t, as shown in [Fig.2](pics/Fig2.png).
+With a little abuse of notation, we also refer to the period which begins at the time tas the period t, as shown in [Fig.2](image/Fig2.png).
 We adopt the physical process in Powell (2007).
 We will introduce the state and decision variables, exogenous information, and transition function before formulating the stochastic dynamic VSP.
 
@@ -209,7 +209,7 @@ To summarize, Table 1 shows the exogenous information (trip time information) we
 | Nt4  | –                   | Start times                      |
 | Nt5  | –                   | Start times if assigned to buses |
 
-![Fig. 4. Transition of the trip sets](pics/Fig4.png)
+![Fig. 4. Transition of the trip sets](image/Fig4.png)
 
 The decision made by public transport companies at the time $t$ can be denoted by ${X_t} = ( \cdots, x_{ij}^t, \cdots$,
 where $x_{ij}^t$ is a binary variable, and it equals one if a vehicle is dispatched to fulfill the trip $j$ after finishing the trip $i$ and zero otherwise.
@@ -219,7 +219,7 @@ where $x_{ij}^t$ is a binary variable, and it equals one if a vehicle is dispatc
 Transitions include updating the trip and arc sets, and the information of trip time, the allocated vehicles’ depots and the number of available buses at virtual depots.
 Specifically, at the time $t+1$ , the trips of $N^t_2$ and $N^t_3$ will be members of $N_1^{t+1}$ ; the trips of $N^t_4$ and the trips of $N^t_5$ , assigned to buses at the time t, will be members of $\hat{N_2}^{t+1}$ or $N_2^{t+1}$ ; the trips of $N^t_5$ , not assigned to buses at the time t, will be members of $N_3^{t+1}$ or $\hat{N_3}^{t+1}$.
 
-[Fig. 4](pics/Fig4.png) specifically demonstrates the transition of the trip sets.
+[Fig. 4](image/Fig4.png) specifically demonstrates the transition of the trip sets.
 After updating the trip set $H_{t+1}$ , the arc set $U_{t+1}$ can be accordingly defined, as per the specification in [Section 3.2](#32-decision-variables-and-exogenous-information).
 
 With regard to how to obtain the trip time information in the column $t+1$ of Table 1, we first let $a_i^{t+1} = a_i^t, i \in N_2^t \cup \hat{N_2}^t, b_i^{t+1} = b_i^{t}, i \in N_1^t$;
@@ -312,7 +312,7 @@ Specifically, it is difficult to construct post-decision variables $\boldsymbol{
 In other words, the inputs of $V_{t}^{a}\left(\boldsymbol{S}_{t}^{a}\right)$ contain both binary decisions and trip time information, which means that we need to find proper $\bar{V}_{t}^{a}\left(\boldsymbol{S}_{t}^{a}\right)$ with the inputs of both binary variables and continuous variables.
 This differs from many previous studies adopting piecewise-linear approximate value functions (e.g., Godfrey and Powell, 2001, 2002).
 
-![Fig. 5. Three-layer neural network for the approximated value function](pics/Fig5.png)
+![Fig. 5. Three-layer neural network for the approximated value function](image/Fig5.png)
 
 To enhance the accuracy, we consider more complicated value function approximations. Neural networks, widely used in ADP as a powerful and adaptable class of nonlinear forms of value function approximations, offer much more flexible groups of frameworks and can also be updated recursively (e.g., Zhang et al., 2006; Powell, 2007; Hajizadeh and Mahootchi, 2016). In this study, we use a three-layer feed-forward neural network, as shown in Fig. 5, to approximate $V_{t}^{a}\left(\boldsymbol{S}_{t}^{a}\right)$. The neurons receiving in the three-layer feedforward neural network's input layer include: (i) the decision variable $\boldsymbol{X}_{t}$; (ii) the state variable $P_{t}$, i.e., $\left(b_{i}^{t}-t \cdot L\right.$ ) $/ L, i \in N_{1}^{t}$; (iii) the state variable $Q_{t}$, i.e., $\left(a_{i}^{t}-t \cdot L\right) / L, i \in N_{2}^{t} \cup \widehat{N}_{2}^{t}$, where $L$ represents the duration of one time period. The output neuron is the estimated value of the value function $V_{t}^{a}\left(\boldsymbol{S}_{t}^{a}\right) .$ Relu function is utilized to activate the perceptron nodes.
 
@@ -375,7 +375,7 @@ At early iterations, we explore more states randomly to update the inaccurate in
 In the numerical study section, we will study the performance of various exploration rates.
 Finally, the detailed procedure of the proposed ADP algorithmic framework is shown as below.
 
-![ADP algorithmic framework](pics/ADP_algorithmic_framework.png)
+![ADP algorithmic framework](image/ADP_algorithmic_framework.png)
 
 ## 5. Numerical examples
 
@@ -431,7 +431,7 @@ The possible explanation is that when the exploration rate is too low, it takes 
 
 [^5]: We use the harmonic stepsize rule at early iterations, when we cannot calculate the BAKF stepsize accurately, as introduced in Powell (2007), to reduce calculation times.
 
-![Fig.6. Convergence curves of ADP using neural networks.](pics/fig6_s.png)
+![Fig.6. Convergence curves of ADP using neural networks.](image/fig6_s.png)
 
 **Table 2** Comparisons of the average realized total costs under the ADP and benchmark policies
 
@@ -452,9 +452,9 @@ The possible explanation is that when the exploration rate is too low, it takes 
 | Mean value         | 610821.15 | 606602.90 | 618326.46 | 619443.61 |
 | Standard deviation | 28828.24  | 27088.33  | 30863.99  | 28891.38  |
 
-![Fig.9. Convergence curves under different rates of ρ.](pics/fig9_s.png)
+![Fig.9. Convergence curves under different rates of ρ.](image/fig9_s.png)
 
-![Fig.10. Convergence curves under different values of λ.](pics/fig10_s.png)
+![Fig.10. Convergence curves under different values of λ.](image/fig10_s.png)
 
 **Table 5** The performances of different .
 
@@ -512,9 +512,9 @@ When we schedule trips at the time $t-1$, the trip $j$ belongs to the set $N_{4}
 
 Next, to let the readers better understand Figs. 9 and 10, we calculate the average values of realized total costs for every 50 iterations and plot the convergence trends based on the calculated average values in Figs. A2 and A3.
 
-![Fig. A2. Convergence trends under different rates of ρ.](pics/figA2_s.png)
+![Fig. A2. Convergence trends under different rates of ρ.](image/figA2_s.png)
 
-![Fig. A3. Convergence trends under different values of λ.](pics/figA3_s.png)
+![Fig. A3. Convergence trends under different values of λ.](image/figA3_s.png)
 
 ## References
 

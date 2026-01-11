@@ -2,8 +2,12 @@
 
 ## 研究生
 
-- [最优化理论](postgraduate/最优化理论.md)
-  - [第六章](postgraduate/最优化题目/6.md)
+- [最优化理论 绪论](postgraduate/optimization/1.md)
+- [最优化理论 最优性条件](postgraduate/optimization/1a.md)
+- [最优化理论 线搜索](postgraduate/optimization/2.md)
+- [最优化理论 无约束多维优化](postgraduate/optimization/3.md)
+- [最优化理论 带约束优化](postgraduate/optimization/4.md)
+  - 作业示例：[第六章](postgraduate/最优化题目/6.md)
 
 ## 大四上
 

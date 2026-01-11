@@ -8,17 +8,18 @@
   <meta name="description" content="Description">
   <meta name="viewport"
     content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-  <link rel="icon" href="https://avatars.githubusercontent.com/u/64292434?s=400&u=1dae24f4bdc8f8d1e5736cf04147480ca7b1b1a1&v=4"
+  <link rel="icon"
+    href="https://avatars.githubusercontent.com/u/64292434?s=400&u=1dae24f4bdc8f8d1e5736cf04147480ca7b1b1a1&v=4"
     type="image/x-icon" />
   <link rel="stylesheet" href="https://cdn.staticfile.org/docsify/4.13.1/themes/vue.css" />
   <link rel="stylesheet" href="https://cdn.staticfile.org/docsify/4.13.1/themes/buble.css" disabled />
   <link rel="stylesheet" href="https://cdn.staticfile.org/docsify/4.13.1/themes/dark.css" disabled />
   <link rel="stylesheet" href="https://cdn.staticfile.org/docsify/4.13.1/themes/pure.css" disabled />
   <style>
-  .katex-display{
-    overflow-x: auto;
-    overflow-y: hidden;
-  }
+    .katex-display {
+      overflow-x: auto;
+      overflow-y: hidden;
+    }
   </style>
 </head>
 
@@ -55,7 +56,7 @@
       }
     }
 
-    //手动更换主题或刷新文件树
+    //手动更换主题
     const control = document.getElementById("control")
     control.value = localStorage.getItem("docsify.theme") ?? "vue"
     changeTheme(control.value);
@@ -89,13 +90,16 @@
             // Invoked each time before parsing the Markdown file.
 
             // edit on gitee and markmap by https://docsify.js.org/#/write-a-plugin?id=edit-button
-            const prefix = document.location.pathname.endsWith('/') ? '' : '..';
+            let prefix = document.location.pathname;
+            if (!prefix.endsWith("/")) {
+              prefix = prefix.substring(0, prefix.lastIndexOf("/") + 1);
+            }
             const markmapUrl = new URL(prefix + 'markmap.html', document.location);
             const markdownUrl = new URL(prefix + vm.route.file, document.location);
             markmapUrl.searchParams.set("md", markdownUrl.pathname)
             content = `[📝 EDIT](https://github.com/xsro/notes/edit/main/${vm.route.file})\t`
               + `[📚 VIEW](https://github.com/xsro/notes/blob/main/${vm.route.file})\t`
-              + `[🎇 MARKMAP](${markmapUrl})\n\n` + content;
+              + `[🎇 MARKMAP](${markmapUrl.href})\n\n` + content;
 
             return content;
           });
@@ -136,26 +140,25 @@
 
   <!-- full text search https://docsify.js.org/#/plugins?id=full-text-search -->
   <script>
+    const searchPaths = localStorage.getItem("docsify.search.paths");
+    if (searchPaths) {
+      window.$docsify.search.paths = JSON.parse(searchPaths);
+    }
     async function getFileList() {
-      const url=new URL(document.location.href);
-      const base=url.pathname.endsWith('/')?url.pathname:url.pathname.substring(0,url.pathname.lastIndexOf('/')+1);
-      const res= await fetch(base+"all-markdown.md")
-      const text=await res.text();
-      const files=[]
+      const url = new URL(document.location.href);
+      const base = url.pathname.endsWith('/') ? url.pathname : url.pathname.substring(0, url.pathname.lastIndexOf('/') + 1);
+      const res = await fetch(base + "all-markdown.md")
+      const text = await res.text();
+      const files = []
       const regex = /\[([^[\]]*)\]/; // 无 g 标志，仅匹配第一次
-      for (const line of text.split("\n")){
+      for (const line of text.split("\n")) {
         const match = line.match(regex);
-        if(match){
-          files.push(match[1]);
+        if (match) {
+          files.push("/" + match[1]);
         }
       }
 
-      window.$docsify.search = {
-        placeholder: {
-          '/': '搜索'
-        },
-        paths: files
-      };
+      localStorage.setItem("docsify.search.paths", JSON.stringify(files));
     }
     getFileList();
   </script>
@@ -185,7 +188,7 @@
   <!-- redirect links prefix with ./ -->
   <script>
     function ensureEndsWith(str_, suffix) {
-      const str=str_.replace(/[\\\/]+/g,"/"); //remove trailing slashes
+      const str = str_.replace(/[\\\/]+/g, "/"); //remove trailing slashes
       if (str.endsWith(suffix)) {
         return str;
       } else {
@@ -196,13 +199,14 @@
     window.$docsify.plugins.push(
       function (hook, vm) {
         hook.beforeEach(function (content) {
-          const prefix1= ensureEndsWith(document.location.pathname,"/") ;
-          const prefix2= ensureEndsWith(vm.route.path,"/") ;
-          let prefix=prefix1+prefix2;
-          if(prefix2.startsWith("/")){
-            prefix=prefix1.substring(0,prefix1.length-1)+prefix2;
+          const prefix1 = ensureEndsWith(document.location.pathname, "/");
+          const prefix2 = ensureEndsWith(vm.route.path, "/");
+          let prefix = prefix1 + prefix2;
+          if (prefix2.startsWith("/")) {
+            prefix = prefix1.substring(0, prefix1.length - 1) + prefix2;
           }
-          content = content.replace(/\(\.\//g, `(${prefix}`);
+          content = content.replace(/\]\(\//g, `](${prefix}`);
+          content = content.replace(/\]\(\\/g, `](${prefix}`);
           return content;
         })
       }
@@ -241,12 +245,12 @@
             const [full, tex, display] = blocks[index];
             let rendered = ""
             if (typeof katex !== "undefined") {
-              try{
+              try {
                 rendered = katex.renderToString(tex, {
                   throwOnError: true,
                   displayMode: display,
                 })
-              }catch(e){
+              } catch (e) {
                 rendered = `<span style="color: red;">${e}</span>`
               }
             } else {

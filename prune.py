@@ -3,6 +3,7 @@ import re
 import urllib.parse
 from copy import copy
 import os
+import shutil
 
 pics=os.listdir("pics")
 
@@ -17,23 +18,21 @@ for md in Path.cwd().glob("**/*.md"):
             continue
         if "%" in img_link:
             content=content.replace(img_link,urllib.parse.unquote(img_link))
-    md.write_text(content,encoding="utf-8")
+    
+        p=Path(img_link)
+        filename=p.name
 
-    for img_link in img_links:
-        if img_link.startswith("http"):
-            continue
-        pars=img_link.count("..")
-        img_path=copy(md)
-        for p in range(pars):
-            img_path=img_path.parent
-            img_link=img_link.replace("..",".")
-        img_path=img_path.parent.joinpath(img_link)
-        if not img_path.exists():
-            print(md,img_path)
-        base=os.path.basename(img_path)
-        if base in pics:
-            pics.pop(pics.index(base))
-for pic in pics:
-    if pic != "meme":
-        print("remove",pic)
-        os.remove("pics/"+pic)
+        image_folder=md.parent.joinpath("image")
+        if not image_folder.exists():
+            image_folder.mkdir()
+
+        src=Path(__file__).parent.joinpath("pics").joinpath(filename)
+        dst=image_folder.joinpath(filename)
+        if src.exists() and not dst.exists():
+            shutil.move(src,dst)
+        new_link=os.path.relpath(dst,md.parent).replace("\\","/")
+        content=content.replace(img_link,new_link)
+
+        print(f"Processed image link: {img_link} -> {new_link}")
+        
+    md.write_text(content,encoding="utf-8")
